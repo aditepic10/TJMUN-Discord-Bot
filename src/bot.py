@@ -1,4 +1,5 @@
 import os
+import time
 
 import discord  # pip install discord.py
 from dotenv import load_dotenv  # .env for discord token
@@ -17,6 +18,8 @@ async def on_ready():
 
 
 """Checks for messages and responds based on word count"""
+
+
 # TODO: Forward to chair's DMs and only allow successful directive requests within 10 mins of the first
 @client.event
 async def on_message(message):
@@ -27,6 +30,11 @@ async def on_message(message):
         response = "Sorry, your directive is too long. Please shorten it and send another message"
     else:
         response = "Thank you, your directive has been received."
+        czar = client.get_user(405839490251227138)  # Adit's discord ID (yours can be found by enabling dev mode and
+        # r-clicking your user name
+        crisis_message = "NEW MESSAGE FROM {}\n".format(message.author) + message.content
+        await czar.send(crisis_message)  # if the message passes the tests, send it over to crisis.
+
     await message.channel.send(response)
 
 
